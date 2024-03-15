@@ -13,6 +13,7 @@
 	import type { TaskContainer } from '$lib/models';
 	import { taskStatusBackgrounds, taskStatusHoverColors } from '$lib/theme/models';
 	import type { PageData } from './$types';
+	import AssigneeFilter from '$lib/components/AssigneeFilter.svelte';
 
 	export let data: PageData;
 
@@ -78,6 +79,7 @@
 		<svelte:fragment slot="filters">
 			<TaskIncludedFilter />
 			<TaskCategoryFilter />
+			<AssigneeFilter />
 		</svelte:fragment>
 	</Sidebar>
 
