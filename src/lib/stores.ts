@@ -297,6 +297,7 @@ if (browser) {
 			);
 			const container = revisions[revisions.length - 1];
 			const tasks = (await fetchContainers({
+				assignee: hashParams.getAll('assignee'),
 				isPartOfMeasure: [container.revision],
 				payloadType: [payloadTypes.enum['internal_objective.task']],
 				taskCategory: hashParams.getAll('taskCategory'),

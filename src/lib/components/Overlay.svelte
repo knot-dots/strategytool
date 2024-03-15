@@ -67,6 +67,7 @@
 		User
 	} from '$lib/models';
 	import { ability, applicationState, overlayWidth } from '$lib/stores';
+	import AssigneeFilter from '$lib/components/AssigneeFilter.svelte';
 
 	export let containersWithObjectives: ContainerWithObjective[] = [];
 	export let internalObjectives: Container[] | undefined = undefined;
@@ -384,6 +385,7 @@
 				<Search slot="search" />
 				<svelte:fragment slot="filters">
 					<TaskCategoryFilter />
+					<AssigneeFilter options={tasks.map(({ payload }) => payload.assignee)} />
 				</svelte:fragment>
 				<svelte:fragment slot="extra">
 					<li>

@@ -588,6 +588,7 @@ export function getManyOrganizationalUnitContainers(filters: { organization?: st
 }
 
 export function getManyTaskContainers(filters: {
+	assignees?: string[];
 	measure?: number;
 	organization?: string;
 	organizationalUnits?: string[];
@@ -600,6 +601,12 @@ export function getManyTaskContainers(filters: {
 			sql.fragment`NOT deleted`,
 			sql.fragment`payload->>'type' = ${payloadTypes.enum['internal_objective.task']}`
 		];
+
+		if (filters.assignees?.length) {
+			conditions.push(
+				sql.fragment`payload->>'assignee' IN (${sql.join(filters.assignees, sql.fragment`, `)})`
+			);
+		}
 
 		if (filters.organization) {
 			conditions.push(sql.fragment`organization = ${filters.organization}`);

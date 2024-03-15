@@ -1,6 +1,10 @@
 import { filterVisible } from '$lib/authorization';
 import { predicates } from '$lib/models';
-import { getAllRelatedOrganizationalUnitContainers, getManyTaskContainers } from '$lib/server/db';
+import {
+	getAllRelatedOrganizationalUnitContainers,
+	getAllRelatedUsers,
+	getManyTaskContainers
+} from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { _, unwrapFunctionStore } from 'svelte-i18n';
@@ -25,6 +29,7 @@ export const load = (async ({ locals, parent, url }) => {
 
 	let containers = await locals.pool.connect(
 		getManyTaskContainers({
+			assignees: url.searchParams.getAll('assignee'),
 			organization: currentOrganization.payload.default ? undefined : currentOrganization.guid,
 			organizationalUnits,
 			taskCategories: url.searchParams.getAll('taskCategory'),

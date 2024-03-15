@@ -25,6 +25,7 @@ import type { RequestHandler } from './$types';
 
 export const GET = (async ({ locals, url }) => {
 	const expectedParams = z.object({
+		assignee: z.array(z.string().uuid()),
 		audience: z.array(audience),
 		category: z.array(sustainableDevelopmentGoals),
 		implements: z.array(z.coerce.number().int().positive()),
@@ -69,6 +70,7 @@ export const GET = (async ({ locals, url }) => {
 	) {
 		containers = await locals.pool.connect(
 			getManyTaskContainers({
+				assignees: parseResult.data.assignee,
 				measure: parseResult.data.isPartOfMeasure[0],
 				taskCategories: parseResult.data.taskCategory,
 				terms: parseResult.data.terms[0]
