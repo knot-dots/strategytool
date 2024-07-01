@@ -78,7 +78,7 @@
 			{/if}
 		</h2>
 
-		{#if 'summary' in container.payload || 'description' in container.payload}
+		{#if 'summary' in container.payload || 'description' in container.payload !isSimpleMeasureContainer(container) && }
 			<div class="summary">
 				<h3>{$_('summary')}</h3>
 				<Summary container={selectedRevision} />
