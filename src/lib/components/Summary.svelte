@@ -21,7 +21,7 @@
 		.use(stripMarkdown)
 		.use(remarkRehype)
 		.use(rehypeSanitize)
-		.use(rehypeExtractExcerpt, { maxLength: 250 })
+		.use(rehypeExtractExcerpt, { maxLength: 200 })
 		.use(rehypeStringify)
 		.process(container.payload.description) then content}
 		{#if content.data.excerpt}
