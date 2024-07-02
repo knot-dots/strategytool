@@ -427,9 +427,9 @@ const basePayload = z
 	.object({
 		audience: z.array(audience).default([audience.enum['audience.public']]),
 		category: z.array(sustainableDevelopmentGoals).default([]),
-		description: z.string().optional(),
-		summary: z.string().max(200).optional(),
-		title: z.string(),
+		description: z.string().trim().optional(),
+		summary: z.string().trim().max(200).optional(),
+		title: z.string().trim(),
 		topic: z.array(topics).default([]),
 		visibility: visibility.default('members')
 	})
@@ -437,12 +437,12 @@ const basePayload = z
 
 const indicatorPayload = basePayload.extend({
 	historicalValues: z.array(z.tuple([z.number().int().positive(), z.number()])).default([]),
-	historicalValuesIntro: z.string().optional(),
+	historicalValuesIntro: z.string().trim().optional(),
 	indicatorCategory: z.array(indicatorCategories).default([]),
 	indicatorType: z.array(indicatorTypes).default([]),
 	measureType: z.array(measureTypes).default([]),
-	measuresIntro: z.string().optional(),
-	objectivesIntro: z.string().optional(),
+	measuresIntro: z.string().trim().optional(),
+	objectivesIntro: z.string().trim().optional(),
 	quantity: z.string(),
 	type: z.literal(payloadTypes.enum.indicator),
 	unit: z.string()
@@ -456,15 +456,15 @@ const indicatorTemplatePayload = indicatorPayload
 
 const measureMonitoringBasePayload = z.object({
 	audience: z.array(audience).default([audience.enum['audience.public']]),
-	description: z.string().optional(),
-	summary: z.string().max(200).optional(),
+	description: z.string().trim().optional(),
+	summary: z.string().trim().max(200).optional(),
 	title: z.string(),
 	visibility: visibility.default('members')
 });
 
 const effectPayload = measureMonitoringBasePayload.extend({
 	achievedValues: z.array(z.tuple([z.number().int().positive(), z.number()])).default([]),
-	description: z.string().optional(),
+	description: z.string().trim().optional(),
 	plannedValues: z.array(z.tuple([z.number().int().positive(), z.number()])).default([]),
 	type: z.literal(payloadTypes.enum.effect)
 });
@@ -509,8 +509,8 @@ const taskPayload = measureMonitoringBasePayload
 
 const measurePayload = basePayload
 	.extend({
-		annotation: z.string().optional(),
-		comment: z.string().optional(),
+		annotation: z.string().trim().optional(),
+		comment: z.string().trim().optional(),
 		endDate: z
 			.string()
 			.refine((v) => z.coerce.date().safeParse(v))
@@ -531,7 +531,7 @@ const measurePayload = basePayload
 				})
 			)
 			.default([]),
-		result: z.string().optional(),
+		result: z.string().trim().optional(),
 		startDate: z
 			.string()
 			.refine((v) => z.coerce.date().safeParse(v))
@@ -564,9 +564,9 @@ const operationalGoalPayload = basePayload
 const organizationPayload = z.object({
 	boards: z.array(boards).default([]),
 	default: z.boolean().default(false),
-	description: z.string().optional(),
+	description: z.string().trim().optional(),
 	image: z.string().url().optional(),
-	name: z.string(),
+	name: z.string().trim(),
 	organizationCategory: organizationCategories.optional(),
 	type: z.literal(payloadTypes.enum.organization),
 	visibility: visibility.default('members')
@@ -574,18 +574,18 @@ const organizationPayload = z.object({
 
 const organizationalUnitPayload = z.object({
 	boards: z.array(boards).default([]),
-	description: z.string().optional(),
+	description: z.string().trim().optional(),
 	image: z.string().url().optional(),
 	level: z.number().int().positive().default(1),
-	name: z.string(),
+	name: z.string().trim(),
 	type: z.literal(payloadTypes.enum.organizational_unit),
 	visibility: visibility.default('members')
 });
 
 const pagePayload = z.object({
-	body: z.string(),
+	body: z.string().trim(),
 	slug: z.string(),
-	title: z.string(),
+	title: z.string().trim(),
 	type: z.literal(payloadTypes.enum.page),
 	visibility: visibility.default('public')
 });
@@ -593,7 +593,7 @@ const pagePayload = z.object({
 const simpleMeasurePayload = basePayload
 	.omit({ summary: true })
 	.extend({
-		annotation: z.string().optional(),
+		annotation: z.string().trim().optional(),
 		endDate: z
 			.string()
 			.refine((v) => z.coerce.date().safeParse(v))
@@ -649,8 +649,8 @@ const strategyPayload = basePayload
 const textPayload = z
 	.object({
 		audience: z.array(audience).default([audience.enum['audience.public']]),
-		body: z.string().optional(),
-		title: z.string(),
+		body: z.string().trim().optional(),
+		title: z.string().trim(),
 		type: z.literal(payloadTypes.enum.text),
 		visibility: visibility.default('members')
 	})
@@ -658,7 +658,7 @@ const textPayload = z
 
 const undefinedPayload = z
 	.object({
-		title: z.string(),
+		title: z.string().trim(),
 		type: z.literal(payloadTypes.enum.undefined),
 		visibility: visibility.default('members')
 	})
